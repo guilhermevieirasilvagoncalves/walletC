@@ -1,33 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
 void menu();
 
-void addMovimentation();
-void deposite();
-void statementMOR();
-void statementEST();
-void statementTRANS();
-void statementALIM();
-void statementTRAB();
-void invest();
-void annualstatement();
-void closeprog();
+void addmovimentação();
+void deposito();
+void extratoMOR();
+void extratoEST();
+void extratoTRANS();
+void extratoALIM();
+void extratoTRAB();
+void extratoanual();
+
 void addMORADIA();
 void addESTUDOS();
 void addTRANSPORTE();
-void addALIMENTACAO();
+void addALIMENTAÇÃO();
 void addTRABALHO();
 
+void investimento();
+void fecharprog();
 
-struct wallet{
-    int day;
-    int month;
-    int year;
-}
-    wallet;
-    user;
 void menu() {
     int num;
     printf("--------------------------------------");
@@ -49,71 +42,76 @@ void menu() {
     printf("--------------------------------------");
     printf(" \n Digite a opção desejada: ");
     scanf("%d", &num);
-    if(num == 1){
-        deposite();
+    if (num == 1) {
+        deposito();
     }
-    else if(num == 2){
-                printf(" \n Movimentações: ");
-                printf(" \n 13. MORADIA" );
-                printf(" \n 14. ESTUDOS" );
-                printf(" \n 15. TRANSPORTE" );
-                printf(" \n 16. ALIMENTAÇÃO" );
-                printf(" \n 17. TRABALHO ");
-                printf(" \n 18. Voltar ao menu principal \n ");
-                printf(" \n Selecione a opção de movimentação: ");
-                scanf("%d", &num);
-                switch(num){
-                    case 13:
-                        addMORADIA();
-                        break;
-                    case 14:
-                        addESTUDOS();
-                        break;
-                    case 15:
-                        addTRANSPORTE();
-                        break;
-                    case 16:
-                        addALIMENTACAO();
-                        break;
-                    case 17:
-                        addTRABALHO();
-                        break;
-                    case 18:
-                        menu();
-                        break;
-                }
+    else if (num == 2) {
+        printf(" \n Movimentações: ");
+        printf(" \n 13. MORADIA");
+        printf(" \n 14. ESTUDOS");
+        printf(" \n 15. TRANSPORTE");
+        printf(" \n 16. ALIMENTAÇÃO");
+        printf(" \n 17. TRABALHO ");
+        printf(" \n 18. Voltar ao menu principal \n ");
+        printf(" \n Selecione a opção de movimentação: ");
+        scanf("%d", &num);
+        switch (num) {
+        case 13:
+            addMORADIA();
+            break;
+        case 14:
+            addESTUDOS();
+            break;
+        case 15:
+            addTRANSPORTE();
+            break;
+        case 16:
+            addALIMENTAÇÃO();
+            break;
+        case 17:
+            addTRABALHO();
+            break;
+        case 18:
+            menu();
+            break;
+        }
     }
-    else if(num == 3){
-        annualstatement();
+    else if (num == 3) {
+        extratoanual();
     }
-    else if(num == 4){
-        statementMOR();
+    else if (num == 4) {
+        extratoMOR();
     }
-    else if(num == 5){
-        statementEST();
+    else if (num == 5) {
+        extratoEST();
     }
-    else if(num == 6){
-        statementTRANS();
+    else if (num == 6) {
+        extratoTRANS();
     }
-    else if(num == 7){
-        statementALIM();
+    else if (num == 7) {
+        extratoALIM();
     }
-    else if(num == 8){
-        statementTRAB();
+    else if (num == 8) {
+        extratoTRAB();
     }
-    else if(num == 9){
-        invest();
+    else if (num == 9) {
+        investimento();
     }
-    else if(num == 10){
+    else if (num == 10) {
         printf("Opção em desenvolvimento");
     }
-    else if(num == 11){
+    else if (num == 11) {
         printf("Opção em desenvolvimento");
     }
-    else if(num == 12){
-        closeprog();
+    else if (num == 12) {
+        fecharprog();
     }
-    else if(num > 18){
+    else if (num > 18) {
         printf("Opção Invalida, Por favor selecione outra opção");
+        menu();
     }
+}
+
+void fecharprog() {
+    exit();
 }
