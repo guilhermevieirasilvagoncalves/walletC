@@ -49,7 +49,7 @@ void menu() {
     printf("7. Extrato do mês no seguimento ALIMENTAÇÃO\n");
     printf("8. Extrato do mês no seguimento TRABALHO\n");
     printf("9. Investimentos\n");
-    printf("10.\n");
+    printf("10. Débito Automático\n");
     printf("11. Resetar carteira\n");
     printf("12. Sair\n");
     printf("--------------------------------------\n");
@@ -131,6 +131,9 @@ void addmovimentação(){
 
 void deposito(){
     int num;
+    printf("--------------------------------------\n");
+    printf("              DEPOSITAR               \n");
+    printf("--------------------------------------\n");
     printf("Digite o valor a ser depositado: \n");
     scanf("%f",&dados.depositar);
     dados.saldo = dados.saldo + dados.depositar;
