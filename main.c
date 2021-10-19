@@ -21,26 +21,30 @@ void addTRABALHO();
 void investimento();
 void fecharprog();
 
+int main(){
+    menu();
+}
+
 void menu() {
     int num;
-    printf("--------------------------------------");
-    printf("Seja Bem Vindo a sua carteira digital!");
-    printf("--------------------------------------");
-    printf("Por favor selecione uma opção:");
-    printf("1. Depositar");
-    printf("2. Registrar nova movimentação");
-    printf("3. Extrato Anual");
-    printf("4. Extrato do mês no seguimento MORADIA");
-    printf("5. Extrato do mês no seguimento ESTUDOS");
-    printf("6. Extrato do mês no seguimento TRANSPORTE");
-    printf("7. Extrato do mês no seguimento ALIMENTAÇÃO");
-    printf("8. Extrato do mês no seguimento TRABALHO");
-    printf("9. Investimentos");
-    printf("10.");
-    printf("11. Resetar carteira ");
-    printf("12. Sair");
-    printf("--------------------------------------");
-    printf(" \n Digite a opção desejada: ");
+    printf("--------------------------------------\n");
+    printf("Seja Bem Vindo a sua carteira digital!\n");
+    printf("--------------------------------------\n");
+    printf("Por favor selecione uma opção:\n");
+    printf("1. Depositar\n");
+    printf("2. Registrar nova movimentação\n");
+    printf("3. Extrato Anual\n");
+    printf("4. Extrato do mês no seguimento MORADIA\n");
+    printf("5. Extrato do mês no seguimento ESTUDOS\n");
+    printf("6. Extrato do mês no seguimento TRANSPORTE\n");
+    printf("7. Extrato do mês no seguimento ALIMENTAÇÃO\n");
+    printf("8. Extrato do mês no seguimento TRABALHO\n");
+    printf("9. Investimentos\n");
+    printf("10.\n");
+    printf("11. Resetar carteira\n");
+    printf("12. Sair\n");
+    printf("--------------------------------------\n");
+    printf("Digite a opção desejada: ");
     scanf("%d", &num);
     if (num == 1) {
         deposito();
