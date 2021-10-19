@@ -21,6 +21,15 @@ void addTRABALHO();
 void investimento();
 void fecharprog();
 
+struct dados{
+    int dia;
+    int mês;
+    int ano;
+    float depositar;
+    float saldo;
+}
+dados;
+
 int main(){
     menu();
 }
@@ -121,7 +130,22 @@ void addmovimentação(){
 }
 
 void deposito(){
-
+    int num;
+    printf("Digite o valor a ser depositado: \n");
+    scanf("%f",&dados.depositar);
+    dados.saldo = dados.saldo + dados.depositar;
+    printf("Depósito realizado com sucesso!\n");
+    //printf("%f\n",dados.saldo);
+    printf("Deseja realizar outra operação?\n");
+    printf("1 - SIM\n");
+    printf("2 - NÃO\n");
+    scanf("%d",&num);
+    switch(num){
+        case 1:
+        menu();
+        case 2: 
+        fecharprog();
+    }
 }
 
 void extratoMOR(){
@@ -149,7 +173,7 @@ void extratoanual(){
 }
 
 void addMORADIA(){
-
+  
 }
 
 void addESTUDOS(){
