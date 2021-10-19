@@ -112,6 +112,62 @@ void menu() {
     }
 }
 
+void addmovimentação(){
+
+}
+
+void deposito(){
+
+}
+
+void extratoMOR(){
+
+}
+
+void extratoEST(){
+
+}
+
+void extratoTRANS(){
+
+}
+
+void extratoALIM(){
+
+}
+
+void extratoTRAB(){
+
+}
+
+void extratoanual(){
+
+}
+
+void addMORADIA(){
+
+}
+
+void addESTUDOS(){
+
+}
+
+void addTRANSPORTE(){
+
+}
+
+void addALIMENTAÇÃO(){
+  
+}
+
+void addTRABALHO(){
+
+}
+
+void investimento(){
+
+}
+
 void fecharprog() {
-    exit();
+    exit(0);
 }
