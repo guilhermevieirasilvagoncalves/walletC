@@ -150,20 +150,45 @@ void deposito(){
     scanf("%d",&data.mes);
     printf("\nAno:");
     scanf("%d",&data.ano);
+    if(data.dia < 0){
+        printf("O número colocado no campo Dia é invalido, por favor coloque outro número:\n");
+        scanf("%d",&data.dia);
+    }
+    if(data.mes < 0){
+        printf("O número colocado no campo Mês é invalido, por favor coloque outro número:\n");
+        scanf("%d",&data.mes);
+    }
+    if(data.ano < 0){
+        printf("O número colocado no campo Ano é invalido, por favor coloque outro número:\n");
+        scanf("%d",&data.ano);
+    }
     printf("\n");
     printf("Processando..\n");
     sleep(3);
     dados.saldo = dados.saldo + dados.depositar;
     FILE *filesaldo = fopen("saldo.txt","a");
-    fprintf(filesaldo,"%.2f",dados.saldo);
-    fprintf(file,"Valor  = R$ %.2f",dados.saldo);
+    fprintf(filesaldo,"%.2f ",dados.saldo);
     fclose(filesaldo);
+    fprintf(file," Valor  = R$ %.2f ",dados.saldo);
+    fprintf(file,"DATA : %d",data.dia);
+    fprintf(file,"/ %d",data.mes);
+    fprintf(file,"/ %d",data.ano);
+    FILE *filereceita = fopen("gR.txt","a");
+    fprintf(filereceita,"1");
+    fprintf(filereceita," %.2f", dados.depositar);
+    fprintf(filereceita," %d", data.dia);
+    fprintf(filereceita," %d", data.mes);
+    fprintf(filereceita," %d\n", data.ano);
+    fclose(filereceita);
     printf("\nDepósito realizado com sucesso!\n");
+    fclose(file);
+
     //printf("%f\n",dados.saldo);
     printf("\nDeseja realizar outra operação?\n");
     printf("1 - SIM\n");
     printf("2 - NÃO\n");
     scanf("%d",&num);
+
     switch(num){
         case 1:
         menu();
