@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <signal.h>
+#include <unistd.h>
 
 void menu();
 
@@ -21,14 +23,17 @@ void addTRABALHO();
 void investimento();
 void fecharprog();
 
-struct dados{
+
+struct data{
     int dia;
-    int mês;
+    int mes;
     int ano;
+}data;
+
+struct dados{
     float depositar;
     float saldo;
-}
-dados;
+}dados;
 
 int main(){
     menu();
@@ -48,8 +53,8 @@ void menu() {
     printf("6. Extrato do mês no seguimento TRANSPORTE\n");
     printf("7. Extrato do mês no seguimento ALIMENTAÇÃO\n");
     printf("8. Extrato do mês no seguimento TRABALHO\n");
-    printf("9. Investimentos\n");
-    printf("10. Débito Automático\n");
+    printf("9. Câmbio\n");
+    printf("10. Empréstimos\n");
     printf("11. Resetar carteira\n");
     printf("12. Sair\n");
     printf("--------------------------------------\n");
@@ -130,16 +135,32 @@ void addmovimentação(){
 }
 
 void deposito(){
+    FILE *file = fopen("gf.txt","a");
     int num;
     printf("--------------------------------------\n");
     printf("              DEPOSITAR               \n");
     printf("--------------------------------------\n");
     printf("Digite o valor a ser depositado: \n");
     scanf("%f",&dados.depositar);
+    printf("Digite a dada do depósito\n");
+    printf("");
+    printf("\nDia:");
+    scanf("%d",&data.dia);
+    printf("\nMês:");
+    scanf("%d",&data.mes);
+    printf("\nAno:");
+    scanf("%d",&data.ano);
+    printf("\n");
+    printf("Processando..\n");
+    sleep(3);
     dados.saldo = dados.saldo + dados.depositar;
-    printf("Depósito realizado com sucesso!\n");
+    FILE *filesaldo = fopen("saldo.txt","a");
+    fprintf(filesaldo,"%.2f",dados.saldo);
+    fprintf(file,"Valor  = R$ %.2f",dados.saldo);
+    fclose(filesaldo);
+    printf("\nDepósito realizado com sucesso!\n");
     //printf("%f\n",dados.saldo);
-    printf("Deseja realizar outra operação?\n");
+    printf("\nDeseja realizar outra operação?\n");
     printf("1 - SIM\n");
     printf("2 - NÃO\n");
     scanf("%d",&num);
