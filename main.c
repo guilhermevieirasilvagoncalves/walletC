@@ -5,7 +5,7 @@
 
 void menu();
 
-void addmovimentação();
+void registromovimentacao();
 void deposito();
 void extratoMOR();
 void extratoEST();
@@ -13,12 +13,6 @@ void extratoTRANS();
 void extratoALIM();
 void extratoTRAB();
 void extratoanual();
-
-void addMORADIA();
-void addESTUDOS();
-void addTRANSPORTE();
-void addALIMENTAÇÃO();
-void addTRABALHO();
 
 void investimento();
 void fecharprog();
@@ -33,6 +27,8 @@ struct data{
 struct dados{
     float depositar;
     float saldo;
+    float gasto;
+    int categoria;
 }dados;
 
 int main(){
@@ -64,35 +60,7 @@ void menu() {
         deposito();
     }
     else if (num == 2) {
-        printf(" \n Movimentações: ");
-        printf(" \n 13. MORADIA");
-        printf(" \n 14. ESTUDOS");
-        printf(" \n 15. TRANSPORTE");
-        printf(" \n 16. ALIMENTAÇÃO");
-        printf(" \n 17. TRABALHO ");
-        printf(" \n 18. Voltar ao menu principal \n ");
-        printf(" \n Selecione a opção de movimentação: ");
-        scanf("%d", &num);
-        switch (num) {
-        case 13:
-            addMORADIA();
-            break;
-        case 14:
-            addESTUDOS();
-            break;
-        case 15:
-            addTRANSPORTE();
-            break;
-        case 16:
-            addALIMENTAÇÃO();
-            break;
-        case 17:
-            addTRABALHO();
-            break;
-        case 18:
-            menu();
-            break;
-        }
+        registromovimentacao();
     }
     else if (num == 3) {
         extratoanual();
@@ -130,10 +98,6 @@ void menu() {
     }
 }
 
-void addmovimentação(){
-
-}
-
 void deposito(){
     FILE *file = fopen("gf.txt","a");
     int num;
@@ -141,8 +105,8 @@ void deposito(){
     printf("              DEPOSITAR               \n");
     printf("--------------------------------------\n");
     printf("Digite o valor a ser depositado: \n");
-    scanf("%f",&dados.depositar);
-    printf("Digite a dada do depósito\n");
+    printf("R$ ");scanf("%f",&dados.depositar);
+    printf("Digite a data do depósito\n");
     printf("");
     printf("\nDia:");
     scanf("%d",&data.dia);
@@ -169,7 +133,7 @@ void deposito(){
     FILE *filesaldo = fopen("saldo.txt","a");
     fprintf(filesaldo,"%.2f ",dados.saldo);
     fclose(filesaldo);
-    fprintf(file," Valor  = R$ %.2f ",dados.saldo);
+    fprintf(file,"Depósito : Valor  = R$ %.2f ",dados.saldo);
     fprintf(file,"DATA : %d",data.dia);
     fprintf(file,"/ %d",data.mes);
     fprintf(file,"/ %d",data.ano);
@@ -197,6 +161,55 @@ void deposito(){
     }
 }
 
+void registromovimentacao(){
+    FILE *file = fopen("gf.txt","a");
+    printf("--------------------------------------\n");
+    printf("       REGISTRAR NOVA MOVIMENTAÇÃO    \n");
+    printf("--------------------------------------\n");
+    printf("Digite o valor gasto: \n");
+    printf("R$ ");scanf("%f",&dados.gasto);
+    printf("Digite a data da movimentação\n");
+    printf("");
+    printf("\nDia:");
+    scanf("%d",&data.dia);
+    printf("\nMês:");
+    scanf("%d",&data.mes);
+    printf("\nAno:");
+    scanf("%d",&data.ano);
+    if(data.dia < 0){
+        printf("O número colocado no campo Dia é invalido, por favor coloque outro número:\n");
+        scanf("%d",&data.dia);
+    }
+    if(data.mes < 0){
+        printf("O número colocado no campo Mês é invalido, por favor coloque outro número:\n");
+        scanf("%d",&data.mes);
+    }
+    if(data.ano < 0){
+        printf("O número colocado no campo Ano é invalido, por favor coloque outro número:\n");
+        scanf("%d",&data.ano);
+    }
+    printf(" \n 1. MORADIA");
+    printf(" \n 2. ESTUDOS");
+    printf(" \n 3. TRANSPORTE");
+    printf(" \n 4. ALIMENTAÇÃO");
+    printf(" \n 5. TRABALHO ");
+    printf("\nDigite o número da categoria da movimentação: \n");
+    scanf("%d",&dados.categoria);
+    dados.saldo = dados.saldo - dados.gasto;
+    FILE *filesaldo = fopen("saldo.txt","a");
+    fprintf(filesaldo,"-%.2f ",dados.saldo);
+    fclose(filesaldo);
+    fprintf(file,"Gasto : Valor  = R$ %.2f ",dados.gasto);
+    fprintf(file,"DATA : %d",data.dia);
+    fprintf(file,"/ %d",data.mes);
+    fprintf(file,"/ %d ",data.ano);
+    fprintf(file,"%d",dados.categoria);
+    printf("\nMovimentação realizada com sucesso!\n");
+    fclose(file);
+    menu();
+
+}   
+
 void extratoMOR(){
 
 }
@@ -221,30 +234,14 @@ void extratoanual(){
 
 }
 
-void addMORADIA(){
-  
-}
 
-void addESTUDOS(){
-
-}
-
-void addTRANSPORTE(){
-
-}
-
-void addALIMENTAÇÃO(){
-  
-}
-
-void addTRABALHO(){
-
-}
 
 void investimento(){
     
 }
 
 void fecharprog() {
+    printf("\n Até mais! Saindo...");
+    sleep(3);
     exit(0);
 }
