@@ -196,7 +196,7 @@ void addTRABALHO(){
 }
 
 void investimento(){
-
+    
 }
 
 void fecharprog() {
