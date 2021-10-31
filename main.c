@@ -8,8 +8,9 @@ void registromovimentacao();
 void deposito();
 void resetarcarteira();
 void extratoanual();
-
-void investimento();
+void extratomensal();
+void emprestimo();
+void cambio();
 void fecharprog();
 
 
@@ -56,22 +57,22 @@ void menu() {
     else if (num == 3) {
         extratoanual();
     }
+    else if(num == 4){
+        extratomensal();
+    }
+    else if (num == 5) {
+        cambio();
+    }
+    else if (num == 6) {
+        emprestimo();
+    }
     else if(num == 7){
         resetarcarteira();
     }
-    else if (num == 9) {
-        investimento();
-    }
-    else if (num == 10) {
-        printf("Opção em desenvolvimento");
-    }
-    else if (num == 11) {
-        printf("Opção em desenvolvimento");
-    }
-    else if (num == 12) {
+    else if (num == 8) {
         fecharprog();
     }
-    else if (num > 18) {
+    else if (num >= 9) {
         printf("Opção Invalida, Por favor selecione outra opção");
         menu();
     }
@@ -338,6 +339,18 @@ for (n = 0;(fscanf(file, "%f", &a)) != EOF;) {
     fclose(arqhtmlanual);
 }
 
+void extratomensal(){
+
+}
+
+void cambio(){
+
+}
+
+void emprestimo(){
+
+}
+
 void resetarcarteira(){
     int opção,num;
     printf("--------------------------------------\n");
@@ -373,10 +386,6 @@ void resetarcarteira(){
       sleep(1);
       menu();
     }
-}
-
-void investimento(){
-    
 }
 
 void fecharprog() {
