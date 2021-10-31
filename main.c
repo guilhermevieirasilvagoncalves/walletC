@@ -87,7 +87,7 @@ void deposito(){
     printf("Digite o valor a ser depositado: \n");
     printf("R$ ");scanf("%f",&dados.depositar);
     printf("");
-    printf("Digite a data do depósito\n");
+    printf("\nDigite a data do depósito\n");
     printf("");
     printf("\nDia:");
     scanf("%d",&data.dia);
@@ -140,7 +140,7 @@ void registromovimentacao(){
     printf("--------------------------------------\n");
     printf("Digite o valor gasto: \n");
     printf("R$ ");scanf("%f",&dados.gasto);
-    printf("Digite a data da movimentação\n");
+    printf("\nDigite a data da movimentação\n");
     printf("");
     printf("\nDia:");
     scanf("%d",&data.dia);
@@ -389,7 +389,7 @@ void resetarcarteira(){
 }
 
 void fecharprog() {
-    printf("\n Até mais! Saindo...");
-    sleep(2);
-    exit(0);
+  sleep(2);
+  printf("\n Até mais! Saindo...");
+  exit(0);
 }
