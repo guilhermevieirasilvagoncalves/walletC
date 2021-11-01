@@ -112,6 +112,7 @@ void deposito(){
 
     fprintf(deposito,"1");
     fprintf(deposito," %.2f", dados.depositar);
+    fprintf(deposito," 0");
     fprintf(deposito," %d", data.dia);
     fprintf(deposito," %d", data.mes);
     fprintf(deposito," %d\n", data.ano);
@@ -221,109 +222,107 @@ void registromovimentacao(){
 
 void extratoanual(){
     int ano;
-    FILE *cssanual = fopen("estilo.css","w");
-    fprintf(cssanual,".a{font-family: 'Arial Black';color:black;text-align: center;align-content: center;font-size: 30pt;}.t{font-family: 'Arial Black';color:darkred;text-align: center;font-size: 12pt;}.e{font-family: 'Arial Black';color:darkred;font-size: 15pt;text-align: center;}table{text-align:center;border-color: red;border-style: solid;background-color: black;}.body{background-color: darkblue;}");
-    FILE *arqhtmlanual = fopen("anual.html","w");
-    fprintf(arqhtmlanual,"<!DOCTYPE html>");
-    fprintf(arqhtmlanual,"<html>");
-    fprintf(arqhtmlanual,"<head><meta charset='UTF-8'><title>Estrato Anual</title><link href='estilo.css'rel='stylesheet'></head><body class='body' align='center'> <a class='a' >Extrato Anual</a><br>");
-    fprintf(arqhtmlanual,"<table border='2' align='left' ><tr class='e'><td>Cadastro</td><td>Valor</td><td>Categoria</td><td>Data</td></tr>");
-    FILE *file = fopen("gf.txt","r");
-
-
+    FILE *arq5 = fopen("relatorio_12meses.html","w");
+    FILE *arq2 = fopen("gerenciadorGasto.txt","r");
+    FILE *arq = fopen("gerenciadorReceita.txt","r");
     printf("--------------------------------------\n");
     printf("             EXTRATO ANUAL            \n");
     printf("--------------------------------------\n");
-    printf("\n Digite o ano do extrato a ser emitido: \n");
-    scanf("%d",&ano);
+    printf("\nDigite o ano do extrato a ser emitido: \n");
+    scanf("%d", &ano);
     int r = 0;
     float x;
     float v[1000];
-
     int i=0;
-
     int z = 0;
     float a;
     float v2[1000];
     int n = 0;
 
-    for (i = 0;(fscanf(file, "%f", &x)) != EOF;) {
-    v[i] = x;
-    for(r=0; v[r]!= 0;){
-    if(v[i] == ano && r % 5 == 0){
-        i = i-5;
+    fprintf(arq5,"<!DOCTYPE html>");
+    fprintf(arq5,"<html>");
+    fprintf(arq5,"<head><meta charset='UTF-8'><title>Relatorio Anual</title><link href='estilo.css'rel='stylesheet'></head><body class='body' align='center'> <a class='a' >Relatorio Anual</a><br>");
+    fprintf(arq5,"<table border='2' align='left' ><tr class='e'><td>Cadastro</td><td>Valor</td><td>Data</td></tr>");
+    for (i = 0;(fscanf(arq, "%f", &x)) != EOF;) {
+        v[i] = x;
+        for(r=0; v[r]!= 0;){
+        if(v[i] == ano && r % 5 == 0){
+            i = i-5;
 
-        fprintf(arqhtmlanual,"<tr class='t'>");
-        fprintf(arqhtmlanual,"<td> Receita </td>");
-        i = i+1;
-        fprintf(arqhtmlanual,"<td> R$%.2f </td>",v[i]);
-        i = i+1;
-        if(v[i]== 1){
-          fprintf(arqhtmlanual,"<td> Moradia </td>");
+            fprintf(arq5,"<tr class='t'>");
+            fprintf(arq5,"<td> Receita </td>");
+            i = i+1;
+            fprintf(arq5,"<td> R$%.2f </td>",v[i]);
+            i = i+1;
+            if(v[i]== 0){
+            fprintf(arq5,"");
+            }
+            if(v[i]== 1){
+            fprintf(arq5,"<td> Moradia </td>");
+            }
+            if(v[i]== 2){
+            fprintf(arq5,"<td> Estudos </td>");
+            }
+            if(v[i]== 3){
+            fprintf(arq5,"<td> Transportes </td>");
+            }
+            if(v[i]== 4){
+            fprintf(arq5,"<td> Alimentacao </td>");
+            }
+            if(v[i]== 5){
+            fprintf(arq5,"<td> Trabalho </td>");
+            }
+            i = i+1;
+            fprintf(arq5,"<td> %.0f ",v[i]);
+            i = i+1;
+            fprintf(arq5," / %.0f ",v[i]);
+            i = i+1;
+            fprintf(arq5," / %.0f ",v[i]);
+            fprintf(arq5,"</td>");
+            fprintf(arq5,"</tr>");
+        i++;
         }
-        if(v[i]== 2){
-          fprintf(arqhtmlanual,"<td> Estudos </td>");
+    r++;
         }
-        if(v[i]== 3){
-          fprintf(arqhtmlanual,"<td> Transportes </td>");
-        }
-        if(v[i]== 4){
-          fprintf(arqhtmlanual,"<td> Alimentacao </td>");
-        }
-        if(v[i]== 5){
-          fprintf(arqhtmlanual,"<td> Trabalho </td>");
-        }
-        i = i+1;
-        fprintf(arqhtmlanual,"<td> %.0f ",v[i]);
-        i = i+1;
-        fprintf(arqhtmlanual," / %.0f ",v[i]);
-        i = i+1;
-        fprintf(arqhtmlanual," / %.0f ",v[i]);
-        fprintf(arqhtmlanual,"</td>");
-        fprintf(arqhtmlanual,"</tr>");
-      i++;
+
+    i++;
     }
-  r++;
-    }
+    fprintf(arq5,"</table>" );
 
- i++;
-  }
-  fprintf(arqhtmlanual,"</table>" );
-
-fprintf(arqhtmlanual,"<table border='2' align='40px' ><tr class='e'><td>Cadastro</td><td>Valor</td><td>Categoria</td><td>Data</td></tr>");
-for (n = 0;(fscanf(file, "%f", &a)) != EOF;) {
+fprintf(arq5,"<table border='2' align='40px' ><tr class='e'><td>Cadastro</td><td>Valor</td><td>Categoria</td><td>Data</td></tr>");
+for (n = 0;(fscanf(arq2, "%f", &a)) != EOF;) {
     v2[n] = a;
     for(z=0; v2[z]!= 0;){
     if(v2[n] == ano && z % 5 == 0){
         n = n-5;
-        fprintf(arqhtmlanual,"<tr class='t'>");
-        fprintf(arqhtmlanual,"<td> Gasto </td>");
+        fprintf(arq5,"<tr class='t'>");
+        fprintf(arq5,"<td> Gasto </td>");
         n = n+1;
-        fprintf(arqhtmlanual,"<td> R$%.2f </td>",v2[n]);
+        fprintf(arq5,"<td> R$%.2f </td>",v2[n]);
         n = n+1;
         if(v2[n]== 1){
-          fprintf(arqhtmlanual,"<td> Moradia </td>");
+          fprintf(arq5,"<td> Moradia </td>");
         }
         if(v2[n]== 2){
-          fprintf(arqhtmlanual,"<td> Estudos </td>");
+          fprintf(arq5,"<td> Estudos </td>");
         }
         if(v2[n]== 3){
-          fprintf(arqhtmlanual,"<td> Transportes </td>");
+          fprintf(arq5,"<td> Transportes </td>");
         }
         if(v2[n]== 4){
-          fprintf(arqhtmlanual,"<td> Alimentacao </td>");
+          fprintf(arq5,"<td> Alimentacao </td>");
         }
         if(v2[n]== 5){
-          fprintf(arqhtmlanual,"<td> Trabalho </td>");
+          fprintf(arq5,"<td> Trabalho </td>");
         }
         n = n+1;
-        fprintf(arqhtmlanual,"<td> %.0f ",v2[n]);
+        fprintf(arq5,"<td> %.0f ",v2[n]);
         n = n+1;
-        fprintf(arqhtmlanual," / %.0f ",v2[n]);
+        fprintf(arq5," / %.0f ",v2[n]);
         n = n+1;
-        fprintf(arqhtmlanual," / %.0f ",v2[n]);
-        fprintf(arqhtmlanual,"</td>");
-        fprintf(arqhtmlanual,"</tr>");
+        fprintf(arq5," / %.0f ",v2[n]);
+        fprintf(arq5,"</td>");
+        fprintf(arq5,"</tr>");
       n++;
     }
 
@@ -332,11 +331,29 @@ for (n = 0;(fscanf(file, "%f", &a)) != EOF;) {
 
  n++;
   }
-    fprintf(arqhtmlanual,"</table>" );
-    fprintf(arqhtmlanual,"</body></html>");
-    fclose(cssanual);
-    fclose(file);
-    fclose(arqhtmlanual);
+  fprintf(arq5,"</table>" );
+fprintf(arq5,"</body></html>");
+  fclose(arq);
+  fclose(arq2);
+  fclose(arq5);
+    printf("\nExtrato em HTML criado\n");
+    
+
+
+
+    int num;
+    printf("\nDeseja realizar outra operação?\n");
+    printf("1 - SIM\n");
+    printf("2 - NÃO\n");
+    scanf("%d",&num);
+
+    switch(num){
+        case 1:
+        menu();
+        case 2: 
+        fecharprog();
+
+}
 }
 
 void extratomensal(){
@@ -365,6 +382,8 @@ void resetarcarteira(){
       remove("gerenciadorReceita.txt");
       remove("gerenciadorGasto.txt");
       remove("saldo.txt");
+      remove("anual.html");
+      remove("estilo.css");
       printf("");
       printf("Resetando dados ....\n");
       printf("");
@@ -388,7 +407,7 @@ void resetarcarteira(){
     }
 }
 
-void fecharprog() {
+void fecharprog(){
   sleep(2);
   printf("\n Até mais! Saindo...");
   exit(0);
