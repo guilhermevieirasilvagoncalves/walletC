@@ -80,7 +80,6 @@ void menu() {
 
 void deposito(){
     FILE *file = fopen("gerenciador_financeiro.txt","a");
-    int i;
     printf("--------------------------------------\n");
     printf("              DEPOSITAR               \n");
     printf("--------------------------------------\n");
@@ -112,7 +111,7 @@ void deposito(){
 
     fprintf(deposito,"1");
     fprintf(deposito," %.2f", dados.depositar);
-    fprintf(deposito," 0");
+    fprintf(deposito," 1");
     fprintf(deposito," %d", data.dia);
     fprintf(deposito," %d", data.mes);
     fprintf(deposito," %d\n", data.ano);
@@ -222,9 +221,9 @@ void registromovimentacao(){
 
 void extratoanual(){
     int ano;
-    FILE *arq5 = fopen("relatorio_12meses.html","w");
-    FILE *arq2 = fopen("gerenciadorGasto.txt","r");
-    FILE *arq = fopen("gerenciadorReceita.txt","r");
+    FILE *htmlanual = fopen("relatorio_12meses.html","w");
+    FILE *gasto = fopen("gerenciadorGasto.txt","r");
+    FILE *deposito = fopen("gerenciadorReceita.txt","r");
     printf("--------------------------------------\n");
     printf("             EXTRATO ANUAL            \n");
     printf("--------------------------------------\n");
@@ -239,47 +238,31 @@ void extratoanual(){
     float v2[1000];
     int n = 0;
 
-    fprintf(arq5,"<!DOCTYPE html>");
-    fprintf(arq5,"<html>");
-    fprintf(arq5,"<head><meta charset='UTF-8'><title>Relatorio Anual</title><link href='estilo.css'rel='stylesheet'></head><body class='body' align='center'> <a class='a' >Relatorio Anual</a><br>");
-    fprintf(arq5,"<table border='2' align='left' ><tr class='e'><td>Cadastro</td><td>Valor</td><td>Data</td></tr>");
-    for (i = 0;(fscanf(arq, "%f", &x)) != EOF;) {
+    fprintf(htmlanual,"<!DOCTYPE html>");
+    fprintf(htmlanual,"<html>");
+    fprintf(htmlanual,"<head><meta charset='UTF-8'><title>Relatorio Anual</title><link href='estilo.css'rel='stylesheet'></head><body class='body' align='center'> <a class='a' >Relatorio Anual</a><br>");
+    fprintf(htmlanual,"<table border='2' align='left' ><tr class='e'><td>Cadastro</td><td>Valor</td><td>Data</td></tr>");
+    for (i = 0;(fscanf(deposito, "%f", &x)) != EOF;) {
         v[i] = x;
         for(r=0; v[r]!= 0;){
         if(v[i] == ano && r % 5 == 0){
-            i = i-5;
-
-            fprintf(arq5,"<tr class='t'>");
-            fprintf(arq5,"<td> Receita </td>");
+            i = i-5
+            fprintf(htmlanual,"<tr class='t'>");
+            fprintf(htmlanual,"<td> Receita </td>");
             i = i+1;
-            fprintf(arq5,"<td> R$%.2f </td>",v[i]);
+            fprintf(htmlanual,"<td> R$%.2f </td>",v[i]);
             i = i+1;
-            if(v[i]== 0){
-            fprintf(arq5,"");
-            }
             if(v[i]== 1){
-            fprintf(arq5,"<td> Moradia </td>");
-            }
-            if(v[i]== 2){
-            fprintf(arq5,"<td> Estudos </td>");
-            }
-            if(v[i]== 3){
-            fprintf(arq5,"<td> Transportes </td>");
-            }
-            if(v[i]== 4){
-            fprintf(arq5,"<td> Alimentacao </td>");
-            }
-            if(v[i]== 5){
-            fprintf(arq5,"<td> Trabalho </td>");
+            fprintf(htmlanual,"");
             }
             i = i+1;
-            fprintf(arq5,"<td> %.0f ",v[i]);
+            fprintf(htmlanual,"<td> %.0f ",v[i]);
             i = i+1;
-            fprintf(arq5," / %.0f ",v[i]);
+            fprintf(htmlanual," / %.0f ",v[i]);
             i = i+1;
-            fprintf(arq5," / %.0f ",v[i]);
-            fprintf(arq5,"</td>");
-            fprintf(arq5,"</tr>");
+            fprintf(htmlanual," / %.0f ",v[i]);
+            fprintf(htmlanual,"</td>");
+            fprintf(htmlanual,"</tr>");
         i++;
         }
     r++;
@@ -287,42 +270,42 @@ void extratoanual(){
 
     i++;
     }
-    fprintf(arq5,"</table>" );
+    fprintf(htmlanual,"</table>" );
 
-fprintf(arq5,"<table border='2' align='40px' ><tr class='e'><td>Cadastro</td><td>Valor</td><td>Categoria</td><td>Data</td></tr>");
-for (n = 0;(fscanf(arq2, "%f", &a)) != EOF;) {
+fprintf(htmlanual,"<table border='2' align='40px' ><tr class='e'><td>Cadastro</td><td>Valor</td><td>Categoria</td><td>Data</td></tr>");
+for (n = 0;(fscanf(gasto, "%f", &a)) != EOF;) {
     v2[n] = a;
     for(z=0; v2[z]!= 0;){
     if(v2[n] == ano && z % 5 == 0){
         n = n-5;
-        fprintf(arq5,"<tr class='t'>");
-        fprintf(arq5,"<td> Gasto </td>");
+        fprintf(htmlanual,"<tr class='t'>");
+        fprintf(htmlanual,"<td> Gasto </td>");
         n = n+1;
-        fprintf(arq5,"<td> R$%.2f </td>",v2[n]);
+        fprintf(htmlanual,"<td> R$%.2f </td>",v2[n]);
         n = n+1;
         if(v2[n]== 1){
-          fprintf(arq5,"<td> Moradia </td>");
+          fprintf(htmlanual,"<td> Moradia </td>");
         }
         if(v2[n]== 2){
-          fprintf(arq5,"<td> Estudos </td>");
+          fprintf(htmlanual,"<td> Estudos </td>");
         }
         if(v2[n]== 3){
-          fprintf(arq5,"<td> Transportes </td>");
+          fprintf(htmlanual,"<td> Transportes </td>");
         }
         if(v2[n]== 4){
-          fprintf(arq5,"<td> Alimentacao </td>");
+          fprintf(htmlanual,"<td> Alimentacao </td>");
         }
         if(v2[n]== 5){
-          fprintf(arq5,"<td> Trabalho </td>");
+          fprintf(htmlanual,"<td> Trabalho </td>");
         }
         n = n+1;
-        fprintf(arq5,"<td> %.0f ",v2[n]);
+        fprintf(htmlanual,"<td> %.0f ",v2[n]);
         n = n+1;
-        fprintf(arq5," / %.0f ",v2[n]);
+        fprintf(htmlanual," / %.0f ",v2[n]);
         n = n+1;
-        fprintf(arq5," / %.0f ",v2[n]);
-        fprintf(arq5,"</td>");
-        fprintf(arq5,"</tr>");
+        fprintf(htmlanual," / %.0f ",v2[n]);
+        fprintf(htmlanual,"</td>");
+        fprintf(htmlanual,"</tr>");
       n++;
     }
 
@@ -331,16 +314,12 @@ for (n = 0;(fscanf(arq2, "%f", &a)) != EOF;) {
 
  n++;
   }
-  fprintf(arq5,"</table>" );
-fprintf(arq5,"</body></html>");
-  fclose(arq);
-  fclose(arq2);
-  fclose(arq5);
-    printf("\nExtrato em HTML criado\n");
-    
-
-
-
+  fprintf(htmlanual,"</table>" );
+fprintf(htmlanual,"</body></html>");
+  fclose(deposito);
+  fclose(gasto);
+  fclose(htmlanual);
+  printf("\nExtrato Anual em HTML e CSS criado\n");
     int num;
     printf("\nDeseja realizar outra operação?\n");
     printf("1 - SIM\n");
@@ -357,8 +336,141 @@ fprintf(arq5,"</body></html>");
 }
 
 void extratomensal(){
+    int ano, mes, categoria;
+    printf("--------------------------------------\n");
+    printf("             EXTRATO MENSAL           \n");
+    printf("--------------------------------------\n");
+    FILE *mensalhtml = fopen("relatorio_mensal_categoria.html","w");
+    FILE *gasto = fopen("gerenciadorGasto.txt","r");
+    FILE *deposito = fopen("gerenciadorReceita.txt","r");
+    printf("\nInsira o ano do extrato a ser emitido: \n");
+    scanf("%d", &ano);
+    printf("\nInsira o mês do extrato a ser emitido: \n");
+    scanf("%d", &mes);
+    printf("\nInsira a categoria do extrato a ser emitido: \n");
+    printf(" \n 1. MORADIA");
+    printf(" \n 2. ESTUDOS");
+    printf(" \n 3. TRANSPORTE");
+    printf(" \n 4. ALIMENTAÇÃO");
+    printf(" \n 5. TRABALHO \n");
+    scanf("%d", &categoria);
 
+      int r = 0;
+      float x;
+      float v[1000];
+      int i=0;
+      int z = 0;
+      float a;
+      float v2[1000];
+      int n = 0;
+      fprintf(mensalhtml,"<!DOCTYPE html>");
+      fprintf(mensalhtml,"<html>");
+      fprintf(mensalhtml,"<head><meta charset='UTF-8'><title>Relatorio Mensal</title><link href='estilo.css'rel='stylesheet'></head><body class='body' align='center'> <a class='a' >Relatorio Mensal por categoria</a><br>");
+      fprintf(mensalhtml,"<table border='2' align='left' ><tr class='e'><td>Cadastro</td><td>Valor</td><td>Data</td></tr>");
+      for (i = 0;(fscanf(deposito, "%f", &x)) != EOF;) {
+        v[i] = x;
+        for(r=0; v[r]!= 0;){
+        if(v[i] == ano && r == 5){
+            i = i-1;
+            if(v[i] == mes){
+              i = i-2;
+              if(v[i] == categoria){
+                i = i - 2;
+            fprintf(mensalhtml,"<tr class='t'>");
+            fprintf(mensalhtml,"<td> Receita </td>");
+            i = i+1;
+            fprintf(mensalhtml,"<td> R$%.2f </td>",v[i]);
+            i = i+1;
+            if(v[i]== 1){
+              fprintf(mensalhtml,"");
+            }
+            i = i+1;
+            fprintf(mensalhtml,"<td> %.0f ",v[i]);
+            i = i+1;
+            fprintf(mensalhtml," / %.0f ",v[i]);
+            i = i+1;
+            fprintf(mensalhtml," / %.0f ",v[i]);
+            fprintf(mensalhtml,"</td>");
+            fprintf(mensalhtml,"</tr>");
+          i++;
+              }
+            }
+
+        }
+      r++;
+        }
+    i++;
+      }
+        fprintf(mensalhtml,"</table>" );
+        fprintf(mensalhtml,"<table border='2' align='left' ><tr class='e'><td>Cadastro</td><td>Valor</td><td>Categoria</td><td>Data</td></tr>");
+        for (n = 0;(fscanf(gasto, "%f", &a)) != EOF;) {
+          v2[n] = a;
+          for(z=0; v2[z]!= 0;){
+          if(v2[n] == ano && z == 5){
+              n = n-1;
+              if(v2[n]== mes){
+                n = n-2;
+                if(v2[n]== categoria){
+                  n = n - 2;
+                  fprintf(mensalhtml,"<tr class='t'>");
+              fprintf(mensalhtml,"<td> Gasto </td>");
+              n = n+1;
+              fprintf(mensalhtml,"<td> R$%.2f </td>",v2[n]);
+              n = n+1;
+              if(v2[n]== 1){
+                fprintf(mensalhtml,"<td> Moradia </td>");
+              }
+              if(v2[n]== 2){
+                fprintf(mensalhtml,"<td> Estudos </td>");
+              }
+              if(v2[n]== 3){
+                fprintf(mensalhtml,"<td> Transportes </td>");
+              }
+              if(v2[n]== 4){
+                fprintf(mensalhtml,"<td> Alimentacao </td>");
+              }
+              if(v2[n]== 5){
+                fprintf(mensalhtml,"<td> Trabalho </td>");
+              }
+              n = n+1;
+              fprintf(mensalhtml,"<td> %.0f ",v2[n]);
+              n = n+1;
+              fprintf(mensalhtml," / %.0f ",v2[n]);
+              n = n+1;
+              fprintf(mensalhtml," / %.0f ",v2[n]);
+              fprintf(mensalhtml,"</td>");
+              fprintf(mensalhtml,"</tr>");
+            n++;
+                }
+              }
+
+          }
+        z++;
+          }
+
+      n++;
+        }
+      fprintf(mensalhtml,"</table>" );
+      fprintf(mensalhtml,"</body></html>");
+      fclose(deposito);
+      fclose(gasto);
+      fclose(mensalhtml);
+      printf("\nExtrato Anual em HTML e CSS criado\n");
+      int num;
+      printf("\nDeseja realizar outra operação?\n");
+      printf("1 - SIM\n");
+      printf("2 - NÃO\n");
+      scanf("%d",&num);
+
+      switch(num){
+          case 1:
+          menu();
+          case 2: 
+          fecharprog();
+  }
+      
 }
+
 
 void cambio(){
 
