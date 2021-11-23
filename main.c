@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <unistd.h>
+#include <time.h>
+#include <locale.h>
 
 void menu();
 void registromovimentacao();
@@ -10,9 +12,9 @@ void resetarcarteira();
 void extratoanual();
 void extratomensal();
 void emprestimo();
-void cambio();
+void loteria();
 void fecharprog();
-
+void saldo();
 
 struct data{
     int dia;
@@ -25,9 +27,11 @@ struct dados{
     float saldo;
     float gasto;
     int categoria;
+    float emprestimo;
 }dados;
 
 int main(){
+    setlocale(LC_ALL,"portuguese");
     menu();
 }
 
@@ -41,10 +45,11 @@ void menu() {
     printf("2. Registrar nova movimentação\n");
     printf("3. Extrato Anual\n");
     printf("4. Extrato do mês em cada seguimento \n");
-    printf("5. Câmbio\n");
-    printf("6. Empréstimos\n");
-    printf("7. Resetar carteira\n");
-    printf("8. Sair\n");
+    printf("5. Saldo\n");
+    printf("6. Loteria\n");
+    printf("7. Empréstimos\n");
+    printf("8. Resetar carteira\n");
+    printf("9. Sair\n");
     printf("--------------------------------------\n");
     printf("Digite a opção desejada: ");
     scanf("%d", &num);
@@ -61,18 +66,21 @@ void menu() {
         extratomensal();
     }
     else if (num == 5) {
-        cambio();
+        saldo();
     }
     else if (num == 6) {
+        loteria();
+    }
+    else if (num == 7) {
         emprestimo();
     }
-    else if(num == 7){
+    else if(num == 8){
         resetarcarteira();
     }
-    else if (num == 8) {
+    else if (num == 9) {
         fecharprog();
     }
-    else if (num >= 9) {
+    else if (num >= 10) {
         printf("Opção Invalida, Por favor selecione outra opção");
         menu();
     }
@@ -167,7 +175,6 @@ void registromovimentacao(){
     printf(" \n 5. TRABALHO ");
     printf("\n");
     printf("\nDigite o número da categoria da movimentação: \n");
-    printf("\n");
     scanf("%d",&dados.categoria);
     printf("");
     printf("\nMovimentação realizada com sucesso!\n");
@@ -237,18 +244,21 @@ void extratoanual(){
     float a;
     float v2[1000];
     int n = 0;
+    float y;
+    int d = 0;
+    int t =0;
 
     fprintf(htmlanual,"<!DOCTYPE html>");
     fprintf(htmlanual,"<html>");
     fprintf(htmlanual,"<head><meta charset='UTF-8'><title>Relatorio Anual</title><link href='estilo.css'rel='stylesheet'></head><body class='body' align='center'> <a class='a' >Relatorio Anual</a><br>");
-    fprintf(htmlanual,"<table border='2' align='left' ><tr class='e'><td>Cadastro</td><td>Valor</td><td>Data</td></tr>");
+    fprintf(htmlanual,"<table border='2' align='left' ><tr class='e'><td>Tipo de Movimentação</td><td>Valor</td><td>Data</td></tr>");
     for (i = 0;(fscanf(deposito, "%f", &x)) != EOF;) {
         v[i] = x;
         for(r=0; v[r]!= 0;){
         if(v[i] == ano && r % 5 == 0){
-            i = i-5
+            i = i-5;
             fprintf(htmlanual,"<tr class='t'>");
-            fprintf(htmlanual,"<td> Receita </td>");
+            fprintf(htmlanual,"<td> Entrada </td>");
             i = i+1;
             fprintf(htmlanual,"<td> R$%.2f </td>",v[i]);
             i = i+1;
@@ -272,14 +282,14 @@ void extratoanual(){
     }
     fprintf(htmlanual,"</table>" );
 
-fprintf(htmlanual,"<table border='2' align='40px' ><tr class='e'><td>Cadastro</td><td>Valor</td><td>Categoria</td><td>Data</td></tr>");
+fprintf(htmlanual,"<table border='2' align='40px' ><tr class='e'><td>Tipo de Movimentação</td><td>Valor</td><td>Categoria</td><td>Data</td></tr>");
 for (n = 0;(fscanf(gasto, "%f", &a)) != EOF;) {
     v2[n] = a;
     for(z=0; v2[z]!= 0;){
     if(v2[n] == ano && z % 5 == 0){
         n = n-5;
         fprintf(htmlanual,"<tr class='t'>");
-        fprintf(htmlanual,"<td> Gasto </td>");
+        fprintf(htmlanual,"<td> Saída </td>");
         n = n+1;
         fprintf(htmlanual,"<td> R$%.2f </td>",v2[n]);
         n = n+1;
@@ -366,7 +376,7 @@ void extratomensal(){
       fprintf(mensalhtml,"<!DOCTYPE html>");
       fprintf(mensalhtml,"<html>");
       fprintf(mensalhtml,"<head><meta charset='UTF-8'><title>Relatorio Mensal</title><link href='estilo.css'rel='stylesheet'></head><body class='body' align='center'> <a class='a' >Relatorio Mensal por categoria</a><br>");
-      fprintf(mensalhtml,"<table border='2' align='left' ><tr class='e'><td>Cadastro</td><td>Valor</td><td>Data</td></tr>");
+      fprintf(mensalhtml,"<table border='2' align='left' ><tr class='e'><td>Tipo de Movimentação</td><td>Valor</td><td>Data</td></tr>");
       for (i = 0;(fscanf(deposito, "%f", &x)) != EOF;) {
         v[i] = x;
         for(r=0; v[r]!= 0;){
@@ -377,7 +387,7 @@ void extratomensal(){
               if(v[i] == categoria){
                 i = i - 2;
             fprintf(mensalhtml,"<tr class='t'>");
-            fprintf(mensalhtml,"<td> Receita </td>");
+            fprintf(mensalhtml,"<td> Entrada </td>");
             i = i+1;
             fprintf(mensalhtml,"<td> R$%.2f </td>",v[i]);
             i = i+1;
@@ -402,7 +412,7 @@ void extratomensal(){
     i++;
       }
         fprintf(mensalhtml,"</table>" );
-        fprintf(mensalhtml,"<table border='2' align='left' ><tr class='e'><td>Cadastro</td><td>Valor</td><td>Categoria</td><td>Data</td></tr>");
+        fprintf(mensalhtml,"<table border='2' align='left' ><tr class='e'><td>Tipo de Movimentação</td><td>Valor</td><td>Categoria</td><td>Data</td></tr>");
         for (n = 0;(fscanf(gasto, "%f", &a)) != EOF;) {
           v2[n] = a;
           for(z=0; v2[z]!= 0;){
@@ -413,7 +423,7 @@ void extratomensal(){
                 if(v2[n]== categoria){
                   n = n - 2;
                   fprintf(mensalhtml,"<tr class='t'>");
-              fprintf(mensalhtml,"<td> Gasto </td>");
+              fprintf(mensalhtml,"<td> Saída </td>");
               n = n+1;
               fprintf(mensalhtml,"<td> R$%.2f </td>",v2[n]);
               n = n+1;
@@ -461,7 +471,6 @@ void extratomensal(){
       printf("1 - SIM\n");
       printf("2 - NÃO\n");
       scanf("%d",&num);
-
       switch(num){
           case 1:
           menu();
@@ -471,13 +480,200 @@ void extratomensal(){
       
 }
 
+void saldo(){
+  printf("--------------------------------------\n");
+  printf("                  SALDO               \n");
+  printf("--------------------------------------\n");
+  printf("Consultando seu saldo ...\n");
+  sleep(1);
+  FILE *gasto = fopen("gerenciadorGasto.txt","a");
+  FILE *saldo = fopen("saldo.txt","a");
+  FILE *gastor = fopen("gerenciadorGasto.txt","r");
+  FILE *s= fopen("saldo.txt","r");
+  int z = 0;
+  float a,x;
+  float v2[1000], v[1000];
+  int n = 0, m =0;
+  int b = 0;
+  float aux_soma=0.0, aux_soma2=0.0;
+  for (m = 0;(fscanf(s, "%f", &x)) != EOF;) {
+    v[m] = x;
+        aux_soma2 = v[m] + aux_soma2;
+ m++;
+  }
 
-void cambio(){
+  for (n = 0;(fscanf(gastor, "%f", &a)) != EOF;) {
+    v2[n] = a;
 
+    for(z=0; v2[z]!= 0;){
+
+    if(v2[n] < 0&&z == 1){
+
+        aux_soma = v2[n] + aux_soma;
+      n++;
+
+    b++;}
+    z++;}
+
+ n++;
+
+  }
+  float aux = aux_soma2 + aux_soma;
+  printf("\n");
+  printf("Seu saldo é de: R$%.2f \n",(aux_soma2 + aux_soma));
+  fclose(gastor);
+  fclose(s);
+  fclose(gasto);
+  fclose(saldo);
+  int num;
+  printf("\nDeseja realizar outra operação?\n");
+  printf("1 - SIM\n");
+  printf("2 - NÃO\n");
+  scanf("%d",&num);
+  switch(num){
+      case 1:
+      menu();
+      case 2: 
+      fecharprog();
+  }
+}
+
+void loteria(){
+  int num1, num2, num3;
+  float premio = 1000.00;
+  int ent1, ent2, ent3;
+  srand(time(NULL));
+  num1 = rand() % 7;
+  num1 = rand() % 7;
+  num1 = rand() % 7;
+  printf("--------------------------------------\n");
+  printf("                 LOTERIA              \n");
+  printf("--------------------------------------\n");
+  printf("Digite três valores (inteiros entre 0 a 6): \n");
+  printf("Valor 1: ");scanf("%d",&num1);
+  printf("\n");
+  printf("Valor 2: ");scanf("%d",&num2);
+  printf("\n");
+  printf("Valor 3: ");scanf("%d",&num3);
+  printf("\n");
+  printf("Processando...\n");
+  sleep(1);
+  if(ent1 == num1 && ent2 == num2 && ent2 == num2){
+    printf("\nParabéns!!!!\n");
+    printf("Você ganhou o prêmio de R$ 1000,00\n");
+    printf("\nPor Favor, digite a data:\n");
+    printf("");
+    printf("\nDia:");
+    scanf("%d",&data.dia);
+    printf("\nMês:");
+    scanf("%d",&data.mes);
+    printf("\nAno:");
+    scanf("%d",&data.ano);
+    FILE *file = fopen("gerenciador_financeiro.txt","a");
+    FILE *saldo = fopen("saldo.txt","a");
+    fprintf(saldo," %.2f", dados.emprestimo);
+    fclose(saldo);
+    FILE *deposito = fopen("gerenciadorReceita.txt","a");
+    fprintf(file,"");
+    fprintf(file,"|Loteria");
+    fprintf(file," |Valor: R$ %.2f", dados.emprestimo);
+    fprintf(file," |Data: %d ", data.dia);
+    fprintf(file,"/ %d ", data.mes);
+    fprintf(file,"/ %d", data.ano);
+    fprintf(deposito,"1");
+    fprintf(deposito," %.2f", dados.emprestimo);
+    fprintf(deposito," 1");
+    fprintf(deposito," %d", data.dia);
+    fprintf(deposito," %d", data.mes);
+    fprintf(deposito," %d\n", data.ano);
+    fclose(file);
+    fclose(deposito);
+    int num;
+    printf("\nDeseja realizar outra operação?\n");
+    printf("1 - SIM\n");
+    printf("2 - NÃO\n");
+    scanf("%d",&num);
+    switch(num){
+        case 1:
+        menu();
+        case 2: 
+        fecharprog();
+    }
+  }
+  else{
+    printf("Que pena, não foi dessa vez que você ganhou o prêmio\n");
+    int num;
+    printf("\nDeseja realizar outra operação?\n");
+    printf("1 - SIM\n");
+    printf("2 - NÃO\n");
+    scanf("%d",&num);
+    switch(num){
+        case 1:
+        menu();
+        case 2: 
+        fecharprog();
+    }
+  }
 }
 
 void emprestimo(){
+  FILE *file = fopen("gerenciador_financeiro.txt","a");
+    printf("--------------------------------------\n");
+    printf("               EMPRÉSTIMO             \n");
+    printf("--------------------------------------\n");
+    printf("Digite o valor que você deseja solicitar: \n");
+    printf("R$ ");scanf("%f",&dados.emprestimo);
+    printf("\nDigite a data do empréstimo\n");
+    printf("");
+    printf("\nDia:");
+    scanf("%d",&data.dia);
+    printf("\nMês:");
+    scanf("%d",&data.mes);
+    printf("\nAno:");
+    scanf("%d",&data.ano);
+    if(data.dia < 0 || data.dia > 31){
+        printf("O número colocado no campo Dia é invalido, por favor coloque outro número:\n");
+        scanf("%d",&data.dia);
+    }
+    if(data.mes < 0 || data.mes > 12){
+        printf("O número colocado no campo Mês é invalido, por favor coloque outro número:\n");
+        scanf("%d",&data.mes);
+    }
+    if(data.ano < 0){
+        printf("O número colocado no campo Ano é invalido, por favor coloque outro número:\n");
+        scanf("%d",&data.ano);
+    }
+    printf("\nEmpréstimo realizado com sucesso!\n");
+    FILE *saldo = fopen("saldo.txt","a");
+    fprintf(saldo," %.2f", dados.emprestimo);
+    fclose(saldo);
+    FILE *deposito = fopen("gerenciadorReceita.txt","a");
+    fprintf(file,"");
+    fprintf(file,"|Empréstimo");
+    fprintf(file," |Valor: R$ %.2f", dados.emprestimo);
+    fprintf(file," |Data: %d ", data.dia);
+    fprintf(file,"/ %d ", data.mes);
+    fprintf(file,"/ %d", data.ano);
+    fprintf(deposito,"1");
+    fprintf(deposito," %.2f", dados.emprestimo);
+    fprintf(deposito," 1");
+    fprintf(deposito," %d", data.dia);
+    fprintf(deposito," %d", data.mes);
+    fprintf(deposito," %d\n", data.ano);
+    fclose(file);
+    fclose(deposito);
+    int num;
+      printf("\nDeseja realizar outra operação?\n");
+      printf("1 - SIM\n");
+      printf("2 - NÃO\n");
+      scanf("%d",&num);
 
+      switch(num){
+          case 1:
+          menu();
+          case 2: 
+          fecharprog();
+  }
 }
 
 void resetarcarteira(){
