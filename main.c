@@ -254,7 +254,7 @@ void extratoanual(){
     fprintf(htmlanual,"<!DOCTYPE html>");
     fprintf(htmlanual,"<html>");
     fprintf(htmlanual,"<head><meta charset='UTF-8'><title>Relatorio Anual</title><link href='estilo.css'rel='stylesheet'></head><body class='body' align='center'> <a class='a' >Relatorio Anual</a><br><br><br><br>");
-    fprintf(htmlanual,"<table border='2' align='left' class = "t1" ><tr class='e'><td>Tipo de Movimentação</td><td>Valor</td><td>Data</td></tr>");
+    fprintf(htmlanual,"<table border='2' align='left' class = 't1' ><tr class='e'><td>Tipo de Movimentação</td><td>Valor</td><td>Data</td></tr>");
     for (i = 0;(fscanf(deposito, "%f", &x)) != EOF;) {
         v[i] = x;
         for(r=0; v[r]!= 0;){
@@ -285,7 +285,7 @@ void extratoanual(){
     }
     fprintf(htmlanual,"</table>" );
 
-fprintf(htmlanual,"<table border='2' align='40px' class = "t2" ><tr class='e'><td>Tipo de Movimentação</td><td>Valor</td><td>Categoria</td><td>Data</td></tr>");
+fprintf(htmlanual,"<table border='2' align='right' class = 't2' ><tr class='e'><td>Tipo de Movimentação</td><td>Valor</td><td>Categoria</td><td>Data</td></tr>");
 for (n = 0;(fscanf(gasto, "%f", &a)) != EOF;) {
     v2[n] = a;
     for(z=0; v2[z]!= 0;){
@@ -379,7 +379,7 @@ void extratomensal(){
       fprintf(mensalhtml,"<!DOCTYPE html>");
       fprintf(mensalhtml,"<html>");
       fprintf(mensalhtml,"<head><meta charset='UTF-8'><title>Relatorio Mensal</title><link href='estilo.css'rel='stylesheet'></head><body class='body' align='center'> <a class='a' >Relatorio Mensal por categoria</a><br><br><br><br>");
-      fprintf(mensalhtml,"<table border='2' align='right' class = "t1" ><tr class='e'><td>Tipo de Movimentação</td><td>Valor</td><td>Data</td></tr>");
+      fprintf(mensalhtml,"<table border='2' align='left' class = 't1' ><tr class='e'><td>Tipo de Movimentação</td><td>Valor</td><td>Data</td></tr>");
       for (i = 0;(fscanf(deposito, "%f", &x)) != EOF;) {
         v[i] = x;
         for(r=0; v[r]!= 0;){
@@ -415,7 +415,7 @@ void extratomensal(){
     i++;
       }
         fprintf(mensalhtml,"</table>" );
-        fprintf(mensalhtml,"<table border='2' align='left' class = "t2" ><tr class='e'><td>Tipo de Movimentação</td><td>Valor</td><td>Categoria</td><td>Data</td></tr>");
+        fprintf(mensalhtml,"<table border='2' align='right' class = 't2' ><tr class='e'><td>Tipo de Movimentação</td><td>Valor</td><td>Categoria</td><td>Data</td></tr>");
         for (n = 0;(fscanf(gasto, "%f", &a)) != EOF;) {
           v2[n] = a;
           for(z=0; v2[z]!= 0;){
