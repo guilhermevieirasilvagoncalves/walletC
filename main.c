@@ -544,21 +544,22 @@ void loteria(){
   int ent1, ent2, ent3;
   srand(time(NULL));
   num1 = rand() % 7;
-  num1 = rand() % 7;
-  num1 = rand() % 7;
+  num2 = rand() % 7;
+  num3 = rand() % 7;
+  printf("%d%d%d",num1,num2,num3);
   printf("--------------------------------------\n");
   printf("                 LOTERIA              \n");
   printf("--------------------------------------\n");
   printf("Digite três valores (inteiros entre 0 a 6): \n");
-  printf("Valor 1: ");scanf("%d",&num1);
+  printf("Valor 1: ");scanf("%d",&ent1);
   printf("\n");
-  printf("Valor 2: ");scanf("%d",&num2);
+  printf("Valor 2: ");scanf("%d",&ent2);
   printf("\n");
-  printf("Valor 3: ");scanf("%d",&num3);
+  printf("Valor 3: ");scanf("%d",&ent3);
   printf("\n");
   printf("Processando...\n");
   sleep(1);
-  if(ent1 == num1 && ent2 == num2 && ent2 == num2){
+  if(ent1 == num1 && ent2 == num2 && ent3 == num3){
     printf("\nParabéns!!!!\n");
     printf("Você ganhou o prêmio de R$ 1000,00\n");
     printf("\nPor Favor, digite a data:\n");
@@ -571,17 +572,17 @@ void loteria(){
     scanf("%d",&data.ano);
     FILE *file = fopen("gerenciador_financeiro.txt","a");
     FILE *saldo = fopen("saldo.txt","a");
-    fprintf(saldo," %.2f", dados.emprestimo);
+    fprintf(saldo," %.2f", premio);
     fclose(saldo);
     FILE *deposito = fopen("gerenciadorReceita.txt","a");
     fprintf(file,"");
     fprintf(file,"|Loteria");
-    fprintf(file," |Valor: R$ %.2f", dados.emprestimo);
+    fprintf(file," |Valor: R$ %.2f", premio);
     fprintf(file," |Data: %d ", data.dia);
     fprintf(file,"/ %d ", data.mes);
     fprintf(file,"/ %d", data.ano);
     fprintf(deposito,"1");
-    fprintf(deposito," %.2f", dados.emprestimo);
+    fprintf(deposito," %.2f", premio);
     fprintf(deposito," 1");
     fprintf(deposito," %d", data.dia);
     fprintf(deposito," %d", data.mes);
@@ -690,7 +691,8 @@ void resetarcarteira(){
       remove("gerenciadorReceita.txt");
       remove("gerenciadorGasto.txt");
       remove("saldo.txt");
-      remove("anual.html");
+      remove("relatorio_12meses.html");
+      remove("relatorio_mensal_categoria.html");
       remove("estilo.css");
       printf("");
       printf("Resetando dados ....\n");
@@ -716,7 +718,8 @@ void resetarcarteira(){
 }
 
 void fecharprog(){
-  sleep(2);
-  printf("\n Até mais! Saindo...");
+  sleep(1);
+  printf("\nAté mais! Saindo...\n");
+  sleep(1);
   exit(0);
 }
