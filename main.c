@@ -87,6 +87,9 @@ void menu() {
 }
 
 void deposito(){
+    FILE *css = fopen("estilo.css","a");
+    fprintf(css,".body {background-color: snow;text-align: center;font-family: 'Palatino', monospace;}.a {font-size: 40px;font-weight: bold;} .t1{position: relative;left: 50px;} .t2{position: relative;right: 50px;} table, th, td {border: 1px solid black;} table {border-collapse: collapse;margin: auto;} th, td {padding: 10px;text-align: center;width: 150px;font-size: 18px;} th{font-weight: bold;}.e {background-color: cornflowerblue;color:white;font-family: 'Courier New', monospace;font-weight: bold;} .t{background-color: aliceblue;font-family: 'Courier New', monospace;} .tB{position: relative;padding-left: 50px;}");
+    fclose(css);
     FILE *file = fopen("gerenciador_financeiro.txt","a");
     printf("--------------------------------------\n");
     printf("              DEPOSITAR               \n");
@@ -251,7 +254,7 @@ void extratoanual(){
     fprintf(htmlanual,"<!DOCTYPE html>");
     fprintf(htmlanual,"<html>");
     fprintf(htmlanual,"<head><meta charset='UTF-8'><title>Relatorio Anual</title><link href='estilo.css'rel='stylesheet'></head><body class='body' align='center'> <a class='a' >Relatorio Anual</a><br><br><br><br>");
-    fprintf(htmlanual,"<table border='2' align='left' ><tr class='e'><td>Tipo de Movimentação</td><td>Valor</td><td>Data</td></tr>");
+    fprintf(htmlanual,"<table border='2' align='left' class = "t1" ><tr class='e'><td>Tipo de Movimentação</td><td>Valor</td><td>Data</td></tr>");
     for (i = 0;(fscanf(deposito, "%f", &x)) != EOF;) {
         v[i] = x;
         for(r=0; v[r]!= 0;){
@@ -282,7 +285,7 @@ void extratoanual(){
     }
     fprintf(htmlanual,"</table>" );
 
-fprintf(htmlanual,"<table border='2' align='40px' ><tr class='e'><td>Tipo de Movimentação</td><td>Valor</td><td>Categoria</td><td>Data</td></tr>");
+fprintf(htmlanual,"<table border='2' align='40px' class = "t2" ><tr class='e'><td>Tipo de Movimentação</td><td>Valor</td><td>Categoria</td><td>Data</td></tr>");
 for (n = 0;(fscanf(gasto, "%f", &a)) != EOF;) {
     v2[n] = a;
     for(z=0; v2[z]!= 0;){
@@ -376,7 +379,7 @@ void extratomensal(){
       fprintf(mensalhtml,"<!DOCTYPE html>");
       fprintf(mensalhtml,"<html>");
       fprintf(mensalhtml,"<head><meta charset='UTF-8'><title>Relatorio Mensal</title><link href='estilo.css'rel='stylesheet'></head><body class='body' align='center'> <a class='a' >Relatorio Mensal por categoria</a><br><br><br><br>");
-      fprintf(mensalhtml,"<table border='2' align='right' ><tr class='e'><td>Tipo de Movimentação</td><td>Valor</td><td>Data</td></tr>");
+      fprintf(mensalhtml,"<table border='2' align='right' class = "t1" ><tr class='e'><td>Tipo de Movimentação</td><td>Valor</td><td>Data</td></tr>");
       for (i = 0;(fscanf(deposito, "%f", &x)) != EOF;) {
         v[i] = x;
         for(r=0; v[r]!= 0;){
@@ -412,7 +415,7 @@ void extratomensal(){
     i++;
       }
         fprintf(mensalhtml,"</table>" );
-        fprintf(mensalhtml,"<table border='2' align='left' ><tr class='e'><td>Tipo de Movimentação</td><td>Valor</td><td>Categoria</td><td>Data</td></tr>");
+        fprintf(mensalhtml,"<table border='2' align='left' class = "t2" ><tr class='e'><td>Tipo de Movimentação</td><td>Valor</td><td>Categoria</td><td>Data</td></tr>");
         for (n = 0;(fscanf(gasto, "%f", &a)) != EOF;) {
           v2[n] = a;
           for(z=0; v2[z]!= 0;){
