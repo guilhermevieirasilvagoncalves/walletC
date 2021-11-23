@@ -546,7 +546,6 @@ void loteria(){
   num1 = rand() % 7;
   num2 = rand() % 7;
   num3 = rand() % 7;
-  printf("%d%d%d",num1,num2,num3);
   printf("--------------------------------------\n");
   printf("                 LOTERIA              \n");
   printf("--------------------------------------\n");
